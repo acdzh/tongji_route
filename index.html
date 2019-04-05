@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Tongji Route</title>
+    <link rel="icon" href="tj.ico" type="image/x-icon">
     <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
 </head>
 <body>
+    <div id="echart_div" style="width:100%; height:1000%"></div>
     <input type="number" id="from" onchange ="change();">
     <input type="number" id="to" onchange="change();">
     <button type="button" id="sub" onclick = "change();">更改</button>
-    <div></div>
-    <div id="echart_div" style="width:100%; height:1000%"></div>
 </body>
 
 
@@ -273,7 +273,7 @@ function dijkstra(s, e){
         }
     }
     for(i of routes[end]){
-        vertices[i].symbolSize = 30;
+        vertices[i].symbolSize = 33;
     }
     option.title.text ="总长: " + dis[end] + "m";
     myChart.setOption(option);
