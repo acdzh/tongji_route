@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+</head>
+<body>
+    <input type="number" id="from" onchange ="change();">
+    <input type="number" id="to" onchange="change();">
+    <button type="button" id="sub" onclick = "change();">更改</button>
+    <div></div>
+    <div id="echart_div" style="width:100%; height:1000%"></div>
+</body>
+
+
+<script>
+
+var edges = new Array(32);
+for(var i = 0; i < 32; i++){
+    edges[i] = new Array(32).fill(0);
+}
+var vertices = [
+    {id: 0, abb: "Ba", name: "北安跨", x: 10, y: 82},
+    {id: 1, abb: "Js", name: "济事楼", x: 17, y: 79}, 
+    {id: 2, abb: "J0-C", name: "嘉园路-中央大道", x: 14, y: 73}, 
+    {id: 3, abb: "JsE", name: "济事楼东", x: 25, y: 77}, 
+    {id: 4, abb: "J1-C", name: "嘉一路-中央大道", x: 25, y: 72}, 
+    {id: 5, abb: "TxB", name: "同心楼北", x: 15, y: 63 }, 
+    {id: 6, abb: "EE", name: "迩楼东", x: 40, y: 77},
+    {id: 7, abb: "G", name: "广楼", x: 35, y: 73},
+    {id: 8, abb: "J2-C", name: "嘉二路-中央大道", x: 32, y: 67},
+    {id: 9, abb: "A", name: "安楼", x: 27, y: 60},
+    {id: 10, abb: "Lib", name: "图书馆", x: 25, y: 50},
+    {id: 11, abb: "LibW", name: "图书馆西", x: 22, y: 45},
+    {id: 12, abb: "7E", name: "7号楼东", x: 55, y: 79},
+    {id: 13, abb: "7", name: "7号楼", x: 52, y: 75},
+    {id: 14, abb: "F", name: "复楼", x: 50, y: 70},
+    {id: 15, abb: "J3-C", name: "嘉三路-中央大道", x: 47, y: 62.5},
+    {id: 16, abb: "C", name: "C楼", x: 40, y: 52},
+    {id: 17, abb: "LibE", name: "图书馆东", x: 30, y: 48},
+    {id: 18, abb: "J3-2", name: "嘉三路-同乙路", x: 29, y: 42},
+    {id: 19, abb: "Jss", name: "嘉实", x: 82, y: 74},
+    {id: 20, abb: "StarE", name: "满天星东", x: 73, y: 73},
+    {id: 21, abb: "Star", name: "满天星", x: 64, y: 67},
+    {id: 22, abb: "New", name: "新天地", x: 57, y: 58},
+    {id: 23, abb: "J4-E", name: "嘉四路东", x: 72, y: 52},
+    {id: 24, abb: "J4-C", name: "嘉四路-中央大道", x: 60, y: 48},
+    {id: 25, abb: "PE", name: "体育馆", x: 42, y: 40},
+    {id: 26, abb: "Foot", name: "足球场", x: 42, y: 43},
+    {id: 27, abb: "J4-2", name: "嘉四路-同乙路", x: 32, y: 38},
+    {id: 28, abb: "Xg", name: "弦歌桥", x: 78, y: 43},
+    {id: 29, abb: "J5-C", name: "嘉五路-中央大道", x: 64, y: 40},
+    {id: 30, abb: "20", name: "20号楼", x: 82, y: 40},
+    {id: 31, abb: "Cj", name: "昌吉东路", x: 72, y: 34}
+];
+
+for(i of vertices){
+    i.name = i.id + " " + i.name;
+}
+
+edges[0][1] = 249.18;
+edges[1][3] = 78.4;
+edges[1][2] = 180.5;
+edges[2][4] = 77.78;
+edges[2][5] = 191.30;
+edges[3][4] = 188.77;
+edges[3][6] = 413.03;
+edges[4][5] = 166.00;
+edges[4][8] = 213.71;
+edges[5][10] = 276.78;
+edges[6][7] = 183;
+edges[6][12] = 122.69;
+edges[7][8] = 157;
+edges[7][14] = 113;
+edges[8][9] = 93;
+edges[8][15] = 128.29;
+edges[9][10] = 170.3;
+edges[9][16] = 127;
+edges[10][11] = 78.62;
+edges[10][17] = 154.18;
+edges[11][18] = 118.63;
+edges[12][13] = 115.1;
+edges[12][20] = 295;
+edges[13][14] = 155;
+edges[13][21] = 228;
+edges[14][15] = 76;
+edges[15][16] = 67.38;
+edges[15][22] = 95.86;
+edges[16][17] = 163;
+edges[16][26] = 303.87;
+edges[17][18] = 108.68;
+edges[18][27] = 127.81;
+edges[19][20] = 185;
+edges[19][23] = 297.25;
+edges[20][21] = 103;
+edges[21][22] = 200;
+edges[21][23] = 136.16;
+edges[22][24] = 200.4;
+edges[23][24] = 116.46;
+edges[23][28] = 130.58
+edges[24][25] = 135.85;
+edges[24][29] = 121.04;
+edges[25][26] = 79.08;
+edges[25][27] = 260.37;
+edges[28][29] = 125.52;
+edges[28][30] = 71;
+edges[29][31] = 103.71;
+
+
+var noselectedLable = {
+    show: true,
+    formatter: '{@value}',
+    textStyle: {
+        color: 'rgba(96,18,7, 0.5)',
+        fontSize: 8,
+        fontWeight: 'normal',
+        textBorderColor: 'auto',
+        textBorderWidth: '0.1'
+    }
+};
+
+var selsectedLable = {
+    show: true,
+    formatter: '{@value}',
+    textStyle: {
+        color: 'rgba(96,18,7, 1)',
+        fontSize: 19,
+        fontWeight: 'bolder',
+        textBorderColor: 'auto',
+        textBorderWidth: '0.1'
+    }
+};
+
+var noselectedLineStyle = {
+    opacity: 0.7,
+    width: 1,
+    curveness: 0.05,
+    show: true
+};
+
+var selectedLineStyle = {
+    opacity: 1,
+    width: 3,
+    curveness: 0.05,
+    show: true
+};
+
+var noselectedItemLable = {
+    show: true,
+    position: 'bottom',
+    color: 'rgb(96,18,7)',
+    offset: [20, 0],
+    fontSize: 14,
+    textBorderColor: 'auto',
+    textBorderWidth: 0.1,
+};
+
+var mylink = [];
+for(i = 0; i < 32; i++){
+    for(j = 0; j < 32; j++){
+        if(edges[i][j] != 0){
+            edges[j][i] = edges[i][j];
+            if (i < j){
+                var t = {
+                    source: i, target: j,
+                    value: edges[i][j],
+                    label: noselectedLable,
+                    lineStyle:noselectedLineStyle
+            };
+            mylink.push(t);
+            }  
+        }
+    }
+}    
+document.getElementById('echart_div').width=window.width;
+document.getElementById('echart_div').clientHeight = window.height;
+var myChart = echarts.init(document.getElementById('echart_div'));
+var option = {
+    title: {
+        text: ''
+    },
+    tooltip: {},
+    animationDurationUpdate: 1500,
+    animationEasingUpdate: 'quinticInOut',
+    series : [
+        {
+            type: 'graph',
+            layout: 'force',
+            force:{
+                repulsion: 1,
+                gravity: 0.01,
+                edgeLength: [2, 8],
+            },
+            focusNodeAdjacency: true,
+            symbol: 'pin',
+            symbolSize: 25,
+            draggable: true,
+            roam: true,
+            itemStyle: { color: 'rgb(167,226,252)' },
+            label: noselectedItemLable,
+            data: [],
+            links: [],
+            lineStyle: {}
+        }
+    ]
+};
+
+option.series[0].data = vertices;
+option.series[0].links = mylink;
+myChart.setOption(option);
+
+function dijkstra(s, e){
+    st = s;
+    end = e;
+    for(i of mylink){
+        i.label = noselectedLable;
+        i.lineStyle = noselectedLineStyle;
+    }
+    for(i of vertices){
+        i.symbolSize =  option.symbolSize;
+    }
+    routes = new Array(32);
+    for(i = 0; i < 32; i++){
+        route = [st];
+        routes[i] = route;
+    }
+    visited = new Array(32).fill(false);
+    dis = new Array(32).fill(2000);
+    s = new Set()
+    visited[st] = true;
+    dis[st] = 0;
+    for(i = 0; i < 32; i++){
+        if(edges[st][i] != 0){
+            dis[i] = edges[st][i];
+            s.add(i);
+            routes[i].push(i);
+        }
+    }
+    
+    while(s.size > 0){
+        for(i = 0; i < 32; i++){
+            if(s.has(i)){
+                minlen = i; break;
+            }
+        }
+        for(i of s){
+            if(dis[i] < dis[minlen] ){
+                minlen = i;
+                visited[minlen] = true;
+            }
+        }
+        s.delete(minlen);
+        for(i = 0; i < 32; i++){
+            if(edges[minlen][i] != 0 && !visited[i]){
+                if(dis[i] > dis[minlen] + edges[minlen][i]){
+                    routes[i] = routes[minlen].slice();
+                    routes[i].push(i);
+                    dis[i] = dis[minlen] + edges[minlen][i];
+                    s.add(i);
+                }
+                a = "";
+            }
+        }
+    }
+    for(i = 0; i < routes[end].length - 1; i++){
+        for(j of mylink){
+            if((j.source == routes[end][i] && j.target == routes[end][i+1]) || (j.target == routes[end][i] && j.source == routes[end][i+1])){
+                j.label = selsectedLable;
+                j.lineStyle = selectedLineStyle;
+            }
+        }
+    }
+    for(i of routes[end]){
+        vertices[i].symbolSize = 30;
+    }
+    option.title.text ="总长: " + dis[end] + "m";
+    myChart.setOption(option);
+    return [dis[end], routes[end]];
+}
+
+dijkstra(1, 30);
+
+function change(){
+    s = document.getElementById("from").value;
+    t = document.getElementById("to").value;
+    dijkstra(s, t);
+};
+
+
+</script>
+
+
+</html>
